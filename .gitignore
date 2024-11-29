@@ -1,0 +1,8 @@
+**/*.txt
+!plaintext.txt
+**/*.bin
+**/*.vscode/
+**/*chacha20
+**/*a.out
+!chacha20.c
+
