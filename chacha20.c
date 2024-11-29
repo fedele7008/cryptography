@@ -146,8 +146,8 @@ chacha20_state_t *chacha20_create_keystream(const chacha20_state_t *initial_stat
         }
     }
 
-    for (idx = 0; idx < 64; idx++)
-        keystream->bytes[idx] += initial_state->bytes[idx];
+    for (idx = 0; idx < 16; idx++)
+        keystream->dwords[idx] += initial_state->dwords[idx];
 
     return keystream;
 }
