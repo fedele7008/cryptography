@@ -152,10 +152,10 @@ chacha20_state_t *chacha20_create_keystream(const chacha20_state_t *initial_stat
     return keystream;
 }
 
-void chacha20_destroy_keystream(chacha20_state_t *keystream) {
-    if (keystream != NULL) {
-        free(keystream);
-        keystream = NULL;
+void chacha20_destroy_keystream(chacha20_state_t **keystream) {
+    if (*keystream != NULL) {
+        free(*keystream);
+        *keystream = NULL;
     }
 }
 
@@ -304,6 +304,7 @@ int main(int argc, char *argv[])
         for (idx = 0; idx < bytes_read; idx++) {
             buffer[idx] ^= keystream->bytes[idx];
         }
+        chacha20_destroy_keystream(&keystream);
         fwrite(buffer, sizeof(char), bytes_read, output_file);
         initial_state.block.counter++;
     }
@@ -316,6 +317,6 @@ end:
         free(key_hex);
     if (iv_hex != NULL)
         free(iv_hex);
-    chacha20_destroy_keystream(keystream);
+    chacha20_destroy_keystream(&keystream);
     return return_code;
 }
